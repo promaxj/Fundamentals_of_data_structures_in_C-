@@ -13,10 +13,10 @@ void print_array(int *array, unsigned int len)
     }
     cout << endl;
 }
-void selection_sort(int *array, unsigned int len)
+void selection_sort(int *array, int len)
 {
     int min;
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len - 1; i++)
     {
         min = i;
         for (int j = i + 1; j < len; j++)
@@ -35,7 +35,7 @@ void generate_list(int *array, unsigned int len)
 {
 
     cout << "array length is " << len << ", and value is 1~1000:" << endl;
-    srand((int)time(NULL));
+    srand(time(NULL));
     for (int i = 0; i < len; i++)
     {
         array[i] = rand() % 1000 + 1; // rand()%(max_value-min_value+1)+ min_value  and put this value to list
@@ -50,30 +50,51 @@ void generate_list(int *array, unsigned int len)
         }
     }
     print_array(array, len);
-    cout << endl;
 }
+// use recursive way
 int binsearch(int *array, int searchnum, int left, int right)
 {
-    int middle;
-    while (left <= right)
+    if (left <= right)
     {
-        middle = (left + right) / 2;
-        switch (COMPARE(array[middle], searchnum))
+        int middle = (left + right) / 2;
+        if (searchnum < array[middle])
         {
-        case -1:
-            left = middle + 1;
-            break;
-        case 0:
+            return binsearch(array, searchnum, left, middle - 1);
+        }
+        else if (searchnum > array[middle])
+        {
+            return binsearch(array, searchnum, middle + 1, right);
+        }
+        else
+        {
             cout << "target num is on the list no." << middle + 1 << endl;
             return 0;
-
-        case 1:
-            right = middle - 1;
         }
     }
     cout << "there is no this number!!!" << endl;
     return 0;
 }
+// int binsearch(int *array, int searchnum, int left, int right)
+// {
+//     int middle;
+//     while (left <= right)
+//     {
+//         middle = (left + right) / 2;
+//         switch (COMPARE(array[middle], searchnum))
+//         {
+//         case -1:
+//             left = middle + 1;
+//             break;
+//         case 0:
+//             cout << "target num is on the list no." << middle + 1 << endl;
+//             return 0;
+//         case 1:
+//             right = middle - 1;
+//         }
+//     }
+//     cout << "there is no this number!!!" << endl;
+//     return 0;
+// }
 int main(void)
 {
     unsigned int array_len, search_num;
