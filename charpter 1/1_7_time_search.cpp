@@ -26,11 +26,11 @@ void TimeSearch()
     cout << "\tn\ttime" << endl;
     for (j = 0; j < 20; j++)
     {
-        long *start, *stop;
-        time(start);
+        time_t start, stop;
+        time(&start);
         long k = sequential_search(a, n[j], 0);
-        time(stop);
-        long run_time = stop - start;
+        time(&stop);
+        time_t run_time = stop - start;
         cout << "\t" << n[j] << "\t" << run_time << endl;
     }
     cout << "Times are in hundredths of a second." << endl;

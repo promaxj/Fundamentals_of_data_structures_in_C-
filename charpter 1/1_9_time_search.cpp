@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>
+#include <sys/time.h>
 using namespace std;
 int sequential_search(int *a, const int n, const int x)
 {
@@ -28,14 +29,16 @@ void TimeSearch()
     cout << "\tn\ttotal_time\trun_time" << endl;
     for (j = 0; j < 20; j++)
     {
-        time_t start, stop;
-        time(&start);
+        timeval tim;
+        gettimeofday(&tim, NULL);
+        double t1 = tim.tv_usec;
         for (long b = 1; b <= r[j]; b++)
         {
             int k = sequential_search(a, n[j], 0);
         }
-        time(&stop);
-        double total_time = difftime(start, stop);
+        gettimeofday(&tim, NULL);
+        double t2 = tim.tv_usec;
+        double total_time = t2 - t1;
         float run_time = (float)(total_time) / (float)(r[j]);
         cout << "\t" << n[j] << "\t" << total_time << "\t\t" << run_time << endl;
     }
